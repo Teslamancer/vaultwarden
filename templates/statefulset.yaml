@@ -45,6 +45,10 @@ spec:
                 secretKeyRef:
                   name: {{ include "vaultwarden.fullname" . }}
                   key: ADMIN_TOKEN
+            {{- if .Values.experimental_feature_flags }}
+            - name: EXPERIMENTAL_CLIENT_FEATURE_FLAGS
+              value: {{ .Values.experimental_feature_flags | toYaml | nindent 18 }}
+            {{- end }}
           ports:
             - containerPort: 8080
               name: http
